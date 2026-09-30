@@ -1,0 +1,90 @@
+RELATÓRIO TÉCNICO Sistema Conecta-mentes 
+Plataforma de Agendamento de Mentoria para Crianças com Deficiências Intelectuais
+
+
+1.  INTRODUÇÃO
+
+O sistema Conecta-mentes foi desenvolvido com o objetivo de oferecer uma
+plataforma estruturada para o agendamento de monitorias voltadas a
+crianças com deficiências intelectuais. O projeto foi implementado
+utilizando Java, com aplicação do padrão arquitetural MVC
+(Model-View-Controller) e integração com o ecossistema Spring Boot.
+
+O sistema permite: - Cadastro e autenticação de mentorados; - Cadastro
+de crianças vinculadas ao mentorado; - Agendamento de sessões em
+horários controlados; - Controle de conflitos de horário; - Visualização
+administrativa completa dos agendamentos.
+
+
+2.  ARQUITETURA E TECNOLOGIAS UTILIZADAS
+
+O sistema foi estruturado seguindo o padrão MVC:
+
+Model: Responsável pelas entidades e persistência de dados, utilizando
+JPA e Hibernate.
+
+View: Desenvolvida com Swing (WindowBuilder), incluindo telas de login,
+cadastro, menu do mentorado, agendamento e painel administrativo.
+
+Controller: Responsável pela lógica de negócio, validações, autenticação
+e comunicação com os repositórios.
+
+Tecnologias utilizadas: - Java - Spring Boot - Spring Data JPA -
+Hibernate - PostgreSQL - Eclipse IDE - Spring Tools Suite -
+WindowBuilder (Swing) - Tomcat embarcado (porta 8085)
+
+
+3.  MODELAGEM DO SISTEMA
+
+A entidade Agendamento foi modelada com: - id (chave primária) -
+LocalDateTime dataHora - String detalhes - StatusAgendamento (ENUM) -
+Relacionamento ManyToOne com Criança
+
+Foi utilizado LocalDateTime para garantir integridade temporal.
+
+
+4.  REGRAS DE NEGÓCIO
+
+-   Ano fixado em 2026;
+-   Não é permitido agendar no passado;
+-   Horários permitidos apenas entre 14:00 e 18:00;
+-   Apenas um agendamento por horário;
+-   Validação de conflitos via existsByDataHoraAndStatus;
+-   Uso da exceção personalizada ExceptionAcesso.
+
+
+5.  SISTEMA DE AUTENTICAÇÃO
+
+Login de mentorado com validação no banco de dados. Login fixo do
+administrador: Nome: Cristiane Senha: 28063002
+
+O administrador acessa uma tela exclusiva (ViewAdministrador) que
+utiliza JTable para listar todos os agendamentos.
+
+
+6.  CONFIGURAÇÃO DO BANCO DE DADOS
+
+Para configurar o banco:
+
+1.  Acesse src/main/resources no Eclipse.
+2.  Abra application.properties.
+3.  Configure conforme seu PostgreSQL:
+
+spring.datasource.url=jdbc:postgresql://localhost:[número de
+porto]/conecta_mentes spring.datasource.username=[nome de usuário]
+spring.datasource.password=[sua senha]
+
+Certifique-se de que o banco conecta_mentes foi criado previamente.
+
+7.  CRIAÇÃO DAS TABELAS
+
+Para criação automática:
+
+spring.jpa.hibernate.ddl-auto=create
+
+Para atualizações recorrentes:
+
+spring.jpa.hibernate.ddl-auto=update
+
+Caso ocorra erro, verifique se o banco conecta_mentes existe e se o
+PostgreSQL está em execução.
